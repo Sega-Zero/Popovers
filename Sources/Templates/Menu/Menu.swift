@@ -199,12 +199,12 @@ public extension Templates {
                     }
                     model.frames[itemID] = frame
                 }
-                .onValueChange(of: model.selectedItemID) { _, newValue in
-                    if newValue == itemID {
+                .onChange(of: model.selectedItemID, do: { selectedID in
+                    if selectedID == itemID {
                         action()
                     }
                     model.selectedItemID = nil
-                }
+                })
                 .onDisappear {
                     model.selectedItemID = nil
                 }
