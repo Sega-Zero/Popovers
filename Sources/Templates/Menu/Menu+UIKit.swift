@@ -100,7 +100,7 @@ public extension Templates {
          This is **not** called when the user taps outside the menu,
          since the menu would already be automatically dismissed.
          */
-        func updatePresent(_ present: Bool) {
+        func updatePresent(_ present: Bool, animated: Bool = true) {
             model.present = present
 
             if
@@ -111,7 +111,12 @@ public extension Templates {
                 popover?.present(in: window)
                 fadeLabel?(true)
             } else {
-                popover?.dismiss()
+                var transaction: Transaction?
+                if !animated {
+                    transaction = Transaction(animation: nil)
+                    transaction?.disablesAnimations = true
+                }
+                popover?.dismiss(transaction: transaction)
                 popover = nil
                 fadeLabel?(false)
             }
@@ -174,8 +179,8 @@ public extension Templates.UIKitMenu {
     }
 
     /// Dismiss the menu.
-    func dismiss() {
-        updatePresent(false)
+    func dismiss(_ animated: Bool = true) {
+        updatePresent(false, animated: animated)
     }
 }
 #endif
