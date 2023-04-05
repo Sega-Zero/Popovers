@@ -45,7 +45,7 @@ public struct WindowReader<Content: View>: View {
     public let view: (UIWindow?) -> Content
 
     /// The read window.
-    @StateObject var windowViewModel = WindowViewModel()
+    @ObservedObject var windowViewModel = WindowViewModel()
 
     /// Reads the `UIWindow` that hosts some SwiftUI content.
     public init(@ViewBuilder view: @escaping (UIWindow?) -> Content) {
